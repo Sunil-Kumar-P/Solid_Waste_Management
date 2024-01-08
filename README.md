@@ -1,0 +1,2 @@
+# Solid_Waste_Management
+Solid_Waste_Management_System
