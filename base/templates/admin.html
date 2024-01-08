@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="container mt-4 custom-container">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+    <!-- All Collector Reports -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title fw-bold mb-4 text-center">All Collector Reports</h5>
+            {% if reports %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover text-center">
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Collector</th>
+                            <th>Client Request</th>
+                            <th>Material</th>
+                            <th>Quantity</th>
+                            <th>Detail</th>
+                            <th>Report Timestamp</th>
+                            <th>Price</th>
+                            <th>Confirmation</th>
+                            <th>Transaction</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for report in reports %}
+                        <tr>
+                            <td>{{ report.id }}</td>
+                            <td>{{ report.collector.username }}</td>
+                            <td>{{ report.client_request.id }}</td>
+                            <td>{{ report.material }}</td>
+                            <td>{{ report.quantity }}</td>
+                            <td>{{ report.detail }}</td>
+                            <td>{{ report.timestamp }}</td>
+                            <td>
+                                {% if report.finalprice > 0 %}
+                                <span class="badge bg-success text-white">{{ report.finalprice }}</span>
+                                {% else %}
+                                {% if report.finalprice > 0 %}
+                                <span class="badge bg-success text-white">{{ report.finalprice }}</span>
+                            {% else %}
+                            {% with finalprice_positive=report.finalprice|stringformat:"s" %}
+                            <span class="badge bg-danger text-white">{{ finalprice_positive|slice:"1:" }}</span>
+                        {% endwith %}
+                            {% endif %}
+                            
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if report.confirmation_from_client %}
+                                <span class="badge bg-success text-white">Confirmed</span>
+                                {% else %}
+                                <span class="badge bg-warning text-white">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if report.transaction_completed %}
+                                <span class="badge bg-success text-white">Completed</span>
+                                {% else %}
+                                <span class="badge bg-warning text-white">Pending</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No records found.</p>
+          {% endif %}
+        </div>
+    </div>
+
+    <!-- All Allocations -->
+    <div class="card mb-4">
+        <div class="card-body text-center">
+            <h5 class="card-title fw-bold mb-4 text-center">All Allocations</h5>
+            <a href="{% url 'allocate_request' %}" class="btn btn-primary mb-3">Allocate</a>
+            {% if allocations %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover text-center">
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <th>Collector</th>
+                            <th>Client Request</th>
+                            <th>Allocation Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for allocation in allocations %}
+                        <tr>
+                            <td>{{ allocation.collector.username }}</td>
+                            <td>{{ allocation.client_request.id }}</td>
+                            <td>{{ allocation.timestamp }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No records found.</p>
+          {% endif %}
+        </div>
+    </div>
+
+    <!-- All Requests -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title fw-bold mb-4 text-center">All Requests</h5>
+            {% if requests %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover text-center">
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Location</th>
+                            <th>Type of Waste</th>
+                            <th>Timestamp</th>
+                            <th>Allotted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in requests %}
+                        <tr>
+                            <td>{{ request.id }}</td>
+                            <td>{{ request.user }}</td>
+                            <td>{{ request.location }}</td>
+                            <td>{{ request.type_of_waste }}</td>
+                            <td>
+                                <span class="badge bg-primary text-white">{{ request.timestamp }}</span>
+                            </td>
+                            <td>
+                                {% if request.alloted %}
+                                Yes
+                                {% else %}
+                                No
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No records found.</p>
+          {% endif %}
+        </div>
+    </div>
+
+    <!-- All Users -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title fw-bold mb-4 text-center">All Users</h5>
+            {% if users %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover text-center">
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Collector</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.fullname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <span class="badge bg-primary text-white">{{ user.mobile_number }}</span>
+                            </td>
+                            <td>
+                                {% if user.collector %}
+                                <span class="badge bg-success text-white">Yes</span>
+                                {% else %}
+                                <span class="badge bg-danger text-white">No</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'edit_user' user.id %}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            No users found
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

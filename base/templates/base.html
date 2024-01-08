@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrashTroop</title>
+  <!-- Favicon -->
+  <!-- <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" /> -->
+
+  <!-- Static CSS file -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <style>
+    .contact-info {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Style for Gmail List */
+    .gmail-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .gmail-list li {
+      margin-bottom: 10px;
+    }
+
+    .gmail-list a {
+      color: #007BFF;
+      /* Bootstrap primary color */
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .gmail-list a:hover {
+      text-decoration: underline;
+    }
+
+    @media (min-width: 1200px) {
+      .custom-container {
+        margin-left: 20%;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .custom-container {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Body Wrapper -->
+
+  <!-- Content Block -->
+
+  {% block content %}{% endblock %}
+
+
+  <script>
+    {% if messages %}
+    {% for message in messages %}
+    alert("{% if message.tags %}{{ message.tags }}{% endif %}{{ message }}");
+    {% endfor %}
+    {% endif %}
+  </script>
+
+  <!-- Scripts -->
+  <script src="{% static 'libs/jquery/dist/jquery.min.js'%}"></script>
+  <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'js/sidebarmenu.js'%}"></script>
+  <script src="{% static 'js/app.min.js'%}"></script>
+  <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js'%}"></script>
+  <script src="{% static 'libs/simplebar/dist/simplebar.js'%}"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-REx+iK9Qvof3/ZFCcSYD1Z4P6zC63p3n3yRJVs9bX2dMXG/JVEV2wFiyZbNrOjz2vhv1fQVJzDCpM5A+Zh8hqA=="
+    crossorigin="anonymous" />
+
+  <!-- Custom Dashboard Script -->
+  <script src="{% static 'js/dashboard.js'%}"></script>
+  <!-- Footer Section
+        <div class="py-6 px-6 text-center">
+          <p class="mb-0 fs-4">Design and Developed by <a href="" target="_blank"
+                  class="pe-1 text-primary text-decoration-underline">Final Year Project</a></p>
+      </div> -->
+</body>
+
+</html>

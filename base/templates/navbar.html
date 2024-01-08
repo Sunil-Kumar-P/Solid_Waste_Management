@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <!-- Sidebar Start -->
+  <aside class="left-sidebar">
+    <!-- Sidebar scroll -->
+    <div>
+      <div class="brand-logo d-flex align-items-center justify-content-between">
+        <a href="{% url 'home' %}" class="text-nowrap logo-img"><img src="{% static 'images/logos/wm.jpg' %}"
+            width="180" alt="Logo" /></a>
+        <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+          <i class="ti ti-x fs-8"></i>
+        </div>
+      </div>
+      <!-- Sidebar navigation -->
+      <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+        <ul id="sidebarnav">
+          <li class="nav-small-cap">
+            <i class="ti ti-home nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Home</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'home' %}" aria-expanded="false">
+              <span><i class="ti ti-layout-dashboard"></i></span>
+              <span class="hide-menu">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-small-cap">
+            <i class="ti ti-package nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Services</span>
+          </li>
+          {% if user.is_authenticated %}
+
+          {% endif %}
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'request' %}" aria-expanded="false">
+              <span><i class="ti ti-file-text"></i></span>
+              <span class="hide-menu">Request</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'status' %}" aria-expanded="false">
+              <span><i class="ti ti-alert-circle"></i></span>
+              <span class="hide-menu">Status</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'contact_us' %}" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-outbound" width="24"
+                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                <path d="M9 15l6 -6" />
+                <path d="M11 9h4v4" />
+              </svg>
+              <span class="hide-menu">Contact Us</span>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'logout' %}" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="24" height="24"
+                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                <path d="M9 12h12l-3 -3" />
+                <path d="M18 15l3 -3" />
+              </svg>
+              <span class="hide-menu">Logout</span>
+            </a>
+          </li>
+          {% if request.user.is_superuser %}
+          <li class="nav-small-cap">
+            <i class="ti ti-package nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Privileges</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'admin_page' %}" aria-expanded="false">
+              <span><i class="ti ti-settings"></i></span>
+              <span class="hide-menu">Admin</span>
+            </a>
+          </li>
+          {% if request.user.collector %}
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'reports' %}" aria-expanded="false">
+              <span><i class="ti ti-file"></i></span>
+              <span class="hide-menu">Report</span>
+            </a>
+          </li>
+          {% endif %}
+          {% else %}
+          {% if request.user.collector %}
+          <li class="nav-small-cap">
+            <i class="ti ti-package nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">Privileges</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'reports' %}" aria-expanded="false">
+              <span><i class="ti ti-file"></i></span>
+              <span class="hide-menu">Report</span>
+            </a>
+          </li>
+          {% endif %}
+          {% endif %}
+          {% else %}
+          <li class="nav-small-cap">
+            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+            <span class="hide-menu">AUTH</span>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'login' %}" aria-expanded="false">
+              <span><i class="ti ti-key"></i></span>
+              <span class="hide-menu">Login</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="{% url 'register' %}" aria-expanded="false">
+              <span><i class="ti ti-user"></i></span>
+              <span class="hide-menu">Register</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+        {% if user.is_authenticated %}
+        <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
+          <div class="d-flex">
+            <div class="unlimited-access-title me-3">
+              <h4 class="fw-semibold fs-4 mb-6 text-dark w-85">{{ request.user.username }}</h4>
+              {% if request.user.is_superuser %}
+              <h6 class="fw-semibold fs-4 mb-6 text-dark w-85"> Admin </h6>
+              {% elif request.user.collector %}
+              <h6 class="fw-semibold fs-4 mb-6 text-dark w-85"> collector </h6>
+              {% else %}
+              <h6 class="fw-semibold fs-4 mb-6 text-dark w-85"> User </h6>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </nav>
+      <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll -->
+  </aside>
+  <!-- Sidebar End -->
+</div>
+{% endblock %}

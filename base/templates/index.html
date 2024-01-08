@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Main wrapper -->
+    {% include 'navbar.html' %}
+    <div class="body-wrapper">
+        <div class="container-fluid custom-container">
+            <!-- Row 1 -->
+            <div class="row">
+                <div class="col-lg-8 d-flex align-items-stretch">
+                    <div class="container-fluid">
+                        <!-- <img src="{% static 'images/img1.jpg' %}" width="100%" alt="" />
+                        <hr> -->
+                        <img src="{% static 'images/img2.jpg' %}" width="100%" alt="" /><hr>
+                        <img src="{% static 'images/img3.jpg' %}" width="100%" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

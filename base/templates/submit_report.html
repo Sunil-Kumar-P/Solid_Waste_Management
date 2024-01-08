@@ -1,0 +1,18 @@
+<!-- templates/submit_report.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'navbar.html' %}
+
+  <div class="container mt-5">
+    <h1 class="mb-4">Submit Report</h1>
+    <hr />
+    <div class="col-lg-6">
+      <form method="post" class="mb-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Report</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

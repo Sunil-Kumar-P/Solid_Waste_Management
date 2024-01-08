@@ -1,0 +1,42 @@
+<!-- templates/allocate_request.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'navbar.html' %}
+  <div class="container mt-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card">
+        <div class="card-body p-4">
+          <h1 class="card-title fw-bold mb-4 text-center">Allocate Request</h1>
+          <hr>
+
+          <form method="post" action="{% url 'allocate_request' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="collector" class="form-label">Select Collector:</label>
+              <select id="collector" name="collector" class="form-select">
+                {% for collector in collectors %}
+                  <option value="{{ collector.id }}">{{ collector.username }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="request" class="form-label">Select Request:</label>
+              <select id="request" name="request" class="form-select">
+                {% for request in requests %}
+                  <option value="{{ request.id }}">{{ request.id }} - {{ request.location }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Allocate Request</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

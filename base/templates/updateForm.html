@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>Update Report</h1>
+    <hr>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="id_material" class="form-label">Material</label>
+            {{ report.material }}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_quantity" class="form-label">Quantity</label>
+            {{ report.quantity }}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_detail" class="form-label">Detail</label>
+            {{ report.detail }}
+          </div>
+
+          <div class="mb-3">
+            <label for="id_finalprice" class="form-label">Final Price</label>
+            {{ report.finalprice }}
+          </div>
+          {% if report.confirmation_from_client %}
+          <div class="mb-3">
+            <label for="id_finalprice" class="form-label">Transaction Completed</label>
+            <input type="checkbox" name="transaction_completed" id="Transaction">
+          </div>
+          
+          {% endif %}
+          <button type="submit" class="btn btn-primary">Update Report</button>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+  </div>
+{% endblock %}

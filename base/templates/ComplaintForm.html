@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+
+    <div class="container">
+    <div class="container">
+        <br>
+        <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Request Forms</h5>
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- Location Input -->
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" class="form-control" id="location" name="location" readonly required>
+                            <small id="locationHelp" class="form-text text-muted">Your current location will be automatically detected.</small>
+                        </div>
+
+                        <!-- Type of Waste Dropdown -->
+                        <div class="form-group">
+                            <label for="type_of_waste">Type of Waste:</label>
+                            <select class="form-control" id="type_of_waste" name="type_of_waste" required>
+                                <option value="" disabled selected>Select type of waste</option>
+                                <option value="Plastic">Plastic</option>
+                                <option value="Paper">Paper</option>
+                                <option value="Glass">Glass</option>
+                                <option value="Metal">Metal</option>
+                                <option value="Wet Waste">Wet Waste</option>
+                                <option value="Dry Waste">Dry Waste</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+
+                        <br>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Script for Location Detection -->
+        <script>
+            // Use HTML5 Geolocation API to get the user's current location
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+            }
+
+            // Show the user's position and fetch the district and town using BigDataCloud API
+            function showPosition(position) {
+                var locationInput = document.getElementById("location");
+                locationInput.value = position.coords.latitude + ", " + position.coords.longitude;
+
+                // Use BigDataCloud Reverse Geocoding API to fetch address details
+                var apiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        locationInput.value = `${data.locality}, ${data.principalSubdivision}, ${data.countryName}`;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching location data:', error);
+                    });
+            }
+
+            // Call the getLocation function when the form is loaded
+            document.addEventListener("DOMContentLoaded", function () {
+                getLocation();
+            });
+        </script>
+    </div>
+{% endblock %}

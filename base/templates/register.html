@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--  Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="d-flex align-items-center justify-content-center w-100">
+            <div class="row justify-content-center w-100">
+                <div class="col-md-8 col-lg-6 col-xxl-3">
+                    <div class="card mb-0">
+                        <div class="card-body">
+                            <a href="{% url 'home' %}" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                                <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
+                            </a>
+                            <h3 class="text-center">TrashTroop</h3>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" aria-describedby="textHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fullname" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" aria-describedby="textHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="mobile_number" class="form-label">Mobile No.</label>
+                                    <input type="tel" name="mobile_number" class="form-control" id="mobile_number" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="password" class="form-label">Password</label>
+                                    <div class="input-group">
+                                    <input type="password" class="form-control" name="password" id="password">
+                                    <span class="input-group-text" onclick="togglePassword()" style="cursor: pointer;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="40" height="40" viewBox="0 0 24 24" stroke-width="3" stroke="#00bfd8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                            <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                          </svg>
+                                    </span>
+                                    </div>
+                                </div>
+                                <input type="submit" value="Signup" name="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"/>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
+                                    <a class="text-primary fw-bold ms-2" href="{% url 'login' %}">Sign In</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("password");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+</script>
+{% endblock %}

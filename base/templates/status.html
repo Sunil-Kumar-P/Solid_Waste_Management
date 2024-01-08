@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'navbar.html' %}
+
+  <div class="container mt-5">
+    <h2>ALL YOUR REQUEST AND TRANSACTIONS</h2>
+    <div class="row">
+      {% if requests %}
+        {% for request, collector in requests %}
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ request.type_of_waste }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ request.location }}</h6>
+                <p class="card-text">
+                  {% if request.alloted %}
+                    Allotted                  <br>
+                    {% if collector %}
+                      <strong>Collector Name :</strong> {{ collector.fullname }}<br>
+                      <strong>Mobile Number:</strong> {{ collector.mobile_number }}<br>
+                      <a href="{% url 'report_details' request.id %}" class="card-link">View Report</a>
+                    {% else %}
+                      Collector details not available
+                    {% endif %}
+                  {% else %}
+                    Not Allotted
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-md-12 text-center">
+          <p>No requests available.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,109 @@
+<!-- templates/report.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="container custom-container">
+  <div class="col-lg-8 ml-5">
+    <div class="card w-100">
+      <div class="card-body p-4">
+        <h5 class="card-title fw-semibold mb-4">Requests Without Report</h5>
+        {% if requests_without_report %}
+        <div class="table-responsive">
+          <table class="table table-bordered text-nowrap mb-0 align-middle">
+            <!-- Table header -->
+            <thead class="thead-dark">
+              <tr>
+                <th>Request ID</th>
+                <th>Client</th>
+                <th>Mobile Number</th>
+                <th>Detail</th>
+                <th>Location</th>
+                <th>Requested Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <!-- Table body -->
+            <tbody>
+              {% for request in requests_without_report %}
+              <tr>
+                <td>{{ request.id }}</td>
+                <td>{{ request.user.username }}</td>
+                <td>{{ request.user.mobile_number }}</td>
+                <td>{{ request.detail }}</td>
+                <td>{{ request.location }}</td>
+                <td>{{ request.timestamp|date:"F j, Y H:i:s" }}</td>
+                <td>
+                  <a href="{% url 'submit_report' request.id %}" class="btn btn-primary">Create a Record</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        All requests have been checked
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <ul>
+    {% for request in requests_without_report %}
+    <li>{{ request }} - {{ request.timestamp }}</li>
+    {% endfor %}
+  </ul>
+  <div class="col-lg-8 ml-5">
+    <div class="card w-100">
+      <div class="card-body p-4">
+        <h5 class="card-title fw-semibold mb-4">Your Reports</h5>
+        {% if collector_reports %}
+        <div class="table-responsive">
+          <table class="table table-bordered text-nowrap mb-0 align-middle">
+            <!-- Table header -->
+            <thead class="thead-dark">
+              <tr>
+                <th>Client Request</th>
+                <th>Material</th>
+                <th>Quantity</th>
+                <th>Detail</th>
+                <th>Final Price</th>
+                <th>Confirmation from Client</th>
+                <th>Transaction Completed</th>
+                <th>Report Timestamp</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <!-- Table body -->
+            <tbody>
+              {% for report in collector_reports %}
+              <tr>
+                <td>{{ report.client_request.id }}</td>
+                <td>{{ report.material }}</td>
+                <td>{{ report.quantity }}</td>
+                <td>{{ report.detail }}</td>
+                <td>{{ report.finalprice }}</td>
+                <td>{% if report.confirmation_from_client %}Confirmed{% else %}Pending{% endif %}</td>
+                <td>{% if report.transaction_completed %}Completed{% else %}Pending{% endif %}</td>
+                <td>{{ report.timestamp|date:"F j, Y H:i:s" }}</td>
+                <td>
+                  {% if not report.transaction_completed %}
+                  <a href="{% url 'update_report' report.id %}" class="btn btn-primary">Update</a>
+                  {% else %}
+                  Completed
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        No reports submitted yet
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
